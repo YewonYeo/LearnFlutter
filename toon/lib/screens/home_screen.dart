@@ -53,7 +53,8 @@ class HomeScreen extends StatelessWidget {
                 icon: const Icon(
                   size: 18,
                   Icons.arrow_back_ios_new_rounded,
-                )),
+                ),
+              ),
         centerTitle: isMain ? false : true,
         elevation: 0.3,
         backgroundColor: Colors.white,

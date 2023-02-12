@@ -33,11 +33,27 @@ class _DetailScreenState extends State<DetailScreen> {
     if (likedToons != null) {
       if (likedToons.contains(widget.id) == true) {
         isLiked = true;
+        setState(() {});
       }
     }
     // 좋아요 리스트가 없는 경우
     else {
       await prefs.setStringList('likedToons', []);
+    }
+  }
+
+  onHeartTap() async {
+    final likedToons = prefs.getStringList('likedToons');
+    if (likedToons != null) {
+      if (isLiked) {
+        likedToons.remove(widget.id);
+      } else {
+        likedToons.add(widget.id);
+      }
+      await prefs.setStringList('likedToons', likedToons);
+      setState(() {
+        isLiked = !isLiked;
+      });
     }
   }
 
@@ -56,8 +72,10 @@ class _DetailScreenState extends State<DetailScreen> {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.favorite_border_outlined),
+            onPressed: onHeartTap,
+            icon: Icon(
+              isLiked ? Icons.favorite : Icons.favorite_outline,
+            ),
           ),
         ],
         centerTitle: true,
